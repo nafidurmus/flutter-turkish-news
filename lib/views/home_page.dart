@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:turkish_news/views/register_page.dart';
 
 class HomePage extends StatefulWidget {
   HomePage({Key key}) : super(key: key);
@@ -49,7 +50,10 @@ class _HomePageState extends State<HomePage> {
                 width: MediaQuery.of(context).size.width * 0.35,
                 child: RaisedButton.icon(
                   onPressed: () {
-                    print('kayit ol');
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => RegisterPage()),
+                    );
                   },
                   elevation: 2.0,
                   shape: new RoundedRectangleBorder(
