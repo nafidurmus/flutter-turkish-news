@@ -7,13 +7,10 @@ class RegisterPage extends StatefulWidget {
   _RegisterStatePage createState() => _RegisterStatePage();
 }
 
-class _LoginData {
-  String email = '';
-  String password = '';
-}
-
 class _RegisterStatePage extends State<RegisterPage> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  //valitation ekle
+
   @override
   Widget build(BuildContext context) {
     final Size screenSize = MediaQuery.of(context).size;

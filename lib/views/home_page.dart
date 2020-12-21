@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:turkish_news/views/login_page.dart';
 import 'package:turkish_news/views/register_page.dart';
 
 class HomePage extends StatefulWidget {
@@ -73,7 +74,10 @@ class _HomePageState extends State<HomePage> {
                 width: MediaQuery.of(context).size.width * 0.35,
                 child: RaisedButton.icon(
                   onPressed: () {
-                    print('giriş yap');
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => LoginPage()),
+                    );
                   },
                   elevation: 2.0,
                   shape: new RoundedRectangleBorder(
