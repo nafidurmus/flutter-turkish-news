@@ -22,25 +22,46 @@ class _RegisterStatePage extends State<RegisterPage> {
       body: Column(
         children: [
           Container(
-            height: screenSize.height * 0.35,
+            height: screenSize.height * 0.40,
             color: Colors.white10,
             padding: EdgeInsets.all(20.0),
             child: Form(
-              key: this._formKey,
+              key: _formKey,
               child: Column(
                 children: [
                   TextFormField(
                     keyboardType: TextInputType.emailAddress,
                     decoration: InputDecoration(labelText: 'E-mail'),
+                    validator: (value) {
+                      if (value.isEmpty) {
+                        return 'Lütfen geçerli bir mail adresi giriniz.';
+                      }
+                      return null;
+                    },
                   ),
                   TextFormField(
                     obscureText: true,
                     decoration: InputDecoration(labelText: 'Şifre'),
+                    validator: (value) {
+                      if (value.isEmpty) {
+                        return 'Lütfen bir şifre giriniz';
+                      }
+                      if (value.length < 6) {
+                        return 'Şifreniz 6 karakter uzunluğunda olmalı';
+                      }
+                      return null;
+                    },
                   ),
                   SizedBox(
                     width: screenSize.width * 0.30,
                     child: RaisedButton.icon(
-                      onPressed: () {},
+                      onPressed: () {
+                        if (_formKey.currentState.validate()) {
+                          // If the form is valid, display a Snackbar.
+                          Scaffold.of(context).showSnackBar(
+                              SnackBar(content: Text('Processing Data')));
+                        }
+                      },
                       elevation: 1.0,
                       shape: new RoundedRectangleBorder(
                         borderRadius: new BorderRadius.circular(5.0),
