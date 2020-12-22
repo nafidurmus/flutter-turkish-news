@@ -34,6 +34,7 @@ class _RegisterStatePage extends State<RegisterPage> {
                     decoration: InputDecoration(labelText: 'E-mail'),
                     validator: (value) {
                       if (value.isEmpty) {
+                        // email kontrolü eklenebilir
                         return 'Lütfen geçerli bir mail adresi giriniz.';
                       }
                       return null;
