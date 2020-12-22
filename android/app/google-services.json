@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "342396861518",
+    "project_id": "flutter-news-8befa",
+    "storage_bucket": "flutter-news-8befa.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:342396861518:android:39999660760ce27cba571f",
+        "android_client_info": {
+          "package_name": "com.nafidurmus"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "342396861518-8kh8irkn25tlkfhfrueri0io86a0ta05.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.nafidurmus",
+            "certificate_hash": "68c21ac19eb08fda0d0840f6f7b7924f9b817913"
+          }
+        },
+        {
+          "client_id": "342396861518-ujfbu1jatlt04k37pu6u6conpvmlvlgp.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAvvjw3gOOy6_RhJO2sXDTABqdRr0RpMyU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "342396861518-ujfbu1jatlt04k37pu6u6conpvmlvlgp.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
