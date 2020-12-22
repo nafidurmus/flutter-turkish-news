@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class RegisterPage extends StatefulWidget {
   RegisterPage({Key key}) : super(key: key);
@@ -7,12 +8,45 @@ class RegisterPage extends StatefulWidget {
   _RegisterStatePage createState() => _RegisterStatePage();
 }
 
+bool _success = true;
+String _message;
+
 Pattern _pattern =
     r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$';
 RegExp regex = RegExp(_pattern);
 
 class _RegisterStatePage extends State<RegisterPage> {
+  final FirebaseAuth _auth = FirebaseAuth.instance;
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
+
+  void _register() async {
+    try {
+      final User user = (await _auth.createUserWithEmailAndPassword(
+        email: _emailController.text,
+        password: _passwordController.text,
+      ))
+          .user;
+      if (user != null) {
+        setState(() {
+          _success = true;
+          _message = "Kayıt başarılı ${user.email}";
+        });
+      } else {
+        setState(() {
+          _success = false;
+          _message = "Kayıt başarısız.";
+        });
+      }
+    } catch (e) {
+      debugPrint(e.toString());
+      setState(() {
+        _success = false;
+        _message = "Kayıt başarısız.\n\n$e";
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -33,6 +67,7 @@ class _RegisterStatePage extends State<RegisterPage> {
               child: Column(
                 children: [
                   TextFormField(
+                    controller: _emailController,
                     keyboardType: TextInputType.emailAddress,
                     decoration: InputDecoration(labelText: 'E-mail'),
                     validator: (value) {
@@ -42,6 +77,7 @@ class _RegisterStatePage extends State<RegisterPage> {
                     },
                   ),
                   TextFormField(
+                    controller: _passwordController,
                     obscureText: true,
                     decoration: InputDecoration(labelText: 'Şifre'),
                     validator: (value) {
@@ -59,8 +95,7 @@ class _RegisterStatePage extends State<RegisterPage> {
                     child: RaisedButton.icon(
                       onPressed: () {
                         if (_formKey.currentState.validate()) {
-                          // geçerli ise yönlerdirme koyulabilir.
-
+                          _register();
                         }
                       },
                       elevation: 1.0,
