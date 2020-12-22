@@ -31,16 +31,16 @@ class _NewsMainPageState extends State<NewsMainPage> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 mainAxisSize: MainAxisSize.max,
                 children: <Widget>[
-                  CircleAvatar(
+                  /*CircleAvatar(
                     backgroundImage: NetworkImage(
                       imageUrl ?? '',
                     ),
                     radius: 20,
                     backgroundColor: Colors.transparent,
-                  ),
+                  ),*/
                   SizedBox(height: 40),
                   Text(
-                    email,
+                    email ?? 'akdlşfkalşk',
                     style: TextStyle(
                         fontSize: 25,
                         color: Colors.deepPurple,

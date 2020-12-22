@@ -3,6 +3,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:turkish_news/views/news_main_page.dart';
+import 'package:turkish_news/views/register_page.dart';
 import 'package:turkish_news/views/sign_in.dart';
 
 class LoginPage extends StatefulWidget {
@@ -12,12 +13,18 @@ class LoginPage extends StatefulWidget {
   _LoginPageState createState() => _LoginPageState();
 }
 
+final FirebaseAuth _auth = FirebaseAuth.instance;
+
 Pattern _pattern =
     r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$';
 RegExp regex = RegExp(_pattern);
 
 class _LoginPageState extends State<LoginPage> {
+  //final FirebaseAuth _auth = FirebaseAuth.instance;
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -39,6 +46,7 @@ class _LoginPageState extends State<LoginPage> {
                 child: Column(
                   children: [
                     TextFormField(
+                      controller: _emailController,
                       keyboardType: TextInputType.emailAddress,
                       decoration: InputDecoration(labelText: 'E-mail'),
                       validator: (value) {
@@ -48,6 +56,7 @@ class _LoginPageState extends State<LoginPage> {
                       },
                     ),
                     TextFormField(
+                      controller: _passwordController,
                       obscureText: true,
                       decoration: InputDecoration(labelText: 'Şifre'),
                       validator: (value) {
@@ -64,9 +73,9 @@ class _LoginPageState extends State<LoginPage> {
                       width: MediaQuery.of(context).size.width * 0.35,
                       child: RaisedButton.icon(
                         onPressed: () {
+                          setState(() {});
                           if (_formKey.currentState.validate()) {
-                            // geçerli ise yönlerdirme koyulabilir.
-
+                            _signInWithEmailAndPassword();
                           }
                         },
                         elevation: 2.0,
@@ -154,6 +163,26 @@ class _LoginPageState extends State<LoginPage> {
             ),
           ],
         ),
+      ),
+    );
+  }
+
+  void _signInWithEmailAndPassword() async {
+    try {
+      final User user = (await _auth.signInWithEmailAndPassword(
+        email: _emailController.text,
+        password: _passwordController.text,
+      ))
+          .user;
+      print(user);
+    } on FirebaseAuthException catch (e) {
+      debugPrint(e.toString());
+    } catch (e) {
+      debugPrint(e.toString());
+    }
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (context) => NewsMainPage(),
       ),
     );
   }
