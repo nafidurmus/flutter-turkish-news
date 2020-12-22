@@ -57,9 +57,8 @@ class _RegisterStatePage extends State<RegisterPage> {
                     child: RaisedButton.icon(
                       onPressed: () {
                         if (_formKey.currentState.validate()) {
-                          // If the form is valid, display a Snackbar.
-                          Scaffold.of(context).showSnackBar(
-                              SnackBar(content: Text('Processing Data')));
+                          // geçerli ise yönlerdirme koyulabilir.
+
                         }
                       },
                       elevation: 1.0,
