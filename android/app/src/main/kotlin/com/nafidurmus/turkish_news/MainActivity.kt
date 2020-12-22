@@ -1,4 +1,4 @@
-package com.nafidurmus.turkish_news
+package com.nafidurmus
 
 import io.flutter.embedding.android.FlutterActivity
 

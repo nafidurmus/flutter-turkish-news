@@ -1,4 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:google_sign_in/google_sign_in.dart';
+import 'package:turkish_news/views/news_main_page.dart';
+import 'package:turkish_news/views/sign_in.dart';
 
 class LoginPage extends StatefulWidget {
   LoginPage({Key key}) : super(key: key);
@@ -13,7 +18,7 @@ RegExp regex = RegExp(_pattern);
 
 class _LoginPageState extends State<LoginPage> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  //valitation ekle
+
   @override
   Widget build(BuildContext context) {
     final Size screenSize = MediaQuery.of(context).size;
@@ -83,7 +88,7 @@ class _LoginPageState extends State<LoginPage> {
               ),
             ),
             Container(
-              height: screenSize.height * 0.15,
+              height: screenSize.height * 0.20,
               width: screenSize.width * 0.90,
               color: Colors.brown[300],
               child: Column(
@@ -99,19 +104,47 @@ class _LoginPageState extends State<LoginPage> {
                     height: screenSize.height * 0.02,
                   ),
                   SizedBox(
-                    width: screenSize.width * 0.45,
-                    child: RaisedButton.icon(
-                      onPressed: () {},
-                      elevation: 2.0,
-                      shape: new RoundedRectangleBorder(
-                        borderRadius: new BorderRadius.circular(5.0),
+                    width: screenSize.width * 0.65,
+                    child: OutlineButton(
+                      splashColor: Colors.white,
+                      onPressed: () {
+                        signInWithGoogle().then((result) {
+                          if (result != null) {
+                            Navigator.of(context).push(
+                              MaterialPageRoute(
+                                builder: (context) {
+                                  return NewsMainPage();
+                                },
+                              ),
+                            );
+                          }
+                        });
+                      },
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(40),
                       ),
-                      color: Colors.white,
-                      icon: Icon(Icons.g_translate),
-                      label: Text(
-                        "Google ile giriş yap",
-                        style: TextStyle(
-                          fontWeight: FontWeight.w900,
+                      highlightElevation: 0,
+                      borderSide: BorderSide(color: Colors.white),
+                      child: Padding(
+                        padding: const EdgeInsets.fromLTRB(0, 10, 0, 10),
+                        child: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: <Widget>[
+                            Image(
+                                image: AssetImage("assets/google_logo.png"),
+                                height: 35.0),
+                            Padding(
+                              padding: const EdgeInsets.only(left: 10),
+                              child: Text(
+                                'Google ile Giriş',
+                                style: TextStyle(
+                                  fontSize: 20,
+                                  color: Colors.white,
+                                ),
+                              ),
+                            )
+                          ],
                         ),
                       ),
                     ),
