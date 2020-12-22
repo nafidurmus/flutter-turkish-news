@@ -25,7 +25,7 @@ class _LoginPageState extends State<LoginPage> {
             color: Colors.white10,
             padding: EdgeInsets.all(20.0),
             child: Form(
-              key: this._formKey,
+              key: _formKey,
               child: Column(
                 children: [
                   TextFormField(

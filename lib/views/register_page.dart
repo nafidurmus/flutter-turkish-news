@@ -7,9 +7,12 @@ class RegisterPage extends StatefulWidget {
   _RegisterStatePage createState() => _RegisterStatePage();
 }
 
+Pattern _pattern =
+    r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$';
+RegExp regex = RegExp(_pattern);
+
 class _RegisterStatePage extends State<RegisterPage> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  //valitation ekle
 
   @override
   Widget build(BuildContext context) {
@@ -33,10 +36,8 @@ class _RegisterStatePage extends State<RegisterPage> {
                     keyboardType: TextInputType.emailAddress,
                     decoration: InputDecoration(labelText: 'E-mail'),
                     validator: (value) {
-                      if (value.isEmpty) {
-                        // email kontrolü eklenebilir
-                        return 'Lütfen geçerli bir mail adresi giriniz.';
-                      }
+                      if (!(regex.hasMatch(value)))
+                        return "Geçerli bir mail adresi giriniz";
                       return null;
                     },
                   ),
