@@ -1,22 +1,41 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:webfeed/webfeed.dart';
-import 'package:http/http.dart' as http;
-import 'package:url_launcher/url_launcher.dart';
+
 import 'dart:convert' show utf8;
+
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:http/http.dart' as http;
 import 'package:shimmer/shimmer.dart';
+import 'package:url_launcher/url_launcher.dart';
+import 'package:webfeed/webfeed.dart';
 
-class NewsMainPage extends StatefulWidget {
-  final String title;
-  final User user;
-  NewsMainPage({Key key, this.user, this.title}) : super(key: key);
-
-  @override
-  _NewsMainPageState createState() => _NewsMainPageState();
+void main() {
+  runApp(MyApp());
 }
 
-class _NewsMainPageState extends State<NewsMainPage> {
+class MyApp extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'Flutter Demo',
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
+        visualDensity: VisualDensity.adaptivePlatformDensity,
+      ),
+      home: MyHomePage(title: 'Flutter Demo Home Page'),
+    );
+  }
+}
+
+class MyHomePage extends StatefulWidget {
+  MyHomePage({Key key, this.title}) : super(key: key);
+
+  final String title;
+
+  @override
+  _MyHomePageState createState() => _MyHomePageState();
+}
+
+class _MyHomePageState extends State<MyHomePage> {
   RssFeed _feed;
   String rssurl = 'https://www.hurriyet.com.tr/rss/anasayfa';
 
@@ -136,7 +155,6 @@ class _NewsMainPageState extends State<NewsMainPage> {
   Widget body() {
     return isFeedEmpty()
         ? ListView.builder(
-            shrinkWrap: true,
             padding: const EdgeInsets.only(left: 20, right: 20, top: 30),
             itemCount: 10,
             itemBuilder: (BuildContext context, int index) {
@@ -181,74 +199,10 @@ class _NewsMainPageState extends State<NewsMainPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          actions: [
-            IconButton(
-                icon: Icon(
-                  Icons.settings,
-                  color: Colors.white,
-                ),
-                onPressed: null)
-          ],
-        ),
-        body: body()
-        /*SingleChildScrollView(
-        child: Column(
-          //mainAxisSize: MainAxisSize.min,
-          children: [
-            /*Container(
-              decoration: BoxDecoration(
-                gradient: LinearGradient(
-                  begin: Alignment.topRight,
-                  end: Alignment.bottomLeft,
-                  colors: [Colors.grey[100], Colors.blue[400]],
-                ),
-              ),
-              child: Center(
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  mainAxisSize: MainAxisSize.max,
-                  children: <Widget>[
-                    Expanded(
-                      child: Center(
-                        child: Text(
-                          "merhaba " + email ?? widget.user.email,
-                          style: TextStyle(
-                              fontSize: 25,
-                              color: Colors.deepPurple,
-                              fontWeight: FontWeight.bold),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),*/
-            /*RaisedButton(
-              onPressed: () {
-                signOutGoogle();
-
-                Navigator.of(context).pushAndRemoveUntil(
-                    MaterialPageRoute(builder: (context) {
-                  return HomePage();
-                }), ModalRoute.withName('/'));
-              },
-              color: Colors.deepPurple,
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Text(
-                  'Sign Out',
-                  style: TextStyle(fontSize: 25, color: Colors.white),
-                ),
-              ),
-              elevation: 5,
-              shape:
-                  RoundedRectangleBorder(borderRadius: BorderRadius.circular(40)),
-            )*/
-            body(),
-          ],
-        ),
-      ),*/
-        );
+      appBar: AppBar(
+        title: Text('RSSフィールド'),
+      ),
+      body: body(),
+    );
   }
 }
