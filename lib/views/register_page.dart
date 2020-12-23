@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:turkish_news/views/news_main_page.dart';
 
 class RegisterPage extends StatefulWidget {
+  //final User user;
   RegisterPage({Key key}) : super(key: key);
 
   @override
@@ -21,6 +23,13 @@ class _RegisterStatePage extends State<RegisterPage> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
 
+  @override
+  void dispose() {
+    _emailController.dispose();
+    _passwordController.dispose();
+    super.dispose();
+  }
+
   void _register() async {
     try {
       final User user = (await _auth.createUserWithEmailAndPassword(
@@ -33,6 +42,14 @@ class _RegisterStatePage extends State<RegisterPage> {
           _success = true;
           _message = "Kayıt başarılı ${user.email}";
         });
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => NewsMainPage(
+              user: user,
+            ),
+          ),
+        );
       } else {
         setState(() {
           _success = false;

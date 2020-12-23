@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:google_sign_in/google_sign_in.dart';
 import 'package:turkish_news/views/news_main_page.dart';
-import 'package:turkish_news/views/register_page.dart';
 import 'package:turkish_news/views/sign_in.dart';
 
 class LoginPage extends StatefulWidget {
@@ -25,6 +22,13 @@ class _LoginPageState extends State<LoginPage> {
 
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
+
+  @override
+  void dispose() {
+    _emailController.dispose();
+    _passwordController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -175,15 +179,17 @@ class _LoginPageState extends State<LoginPage> {
       ))
           .user;
       print(user);
+      Navigator.of(context).push(
+        MaterialPageRoute(
+          builder: (context) => NewsMainPage(
+            user: user,
+          ),
+        ),
+      );
     } on FirebaseAuthException catch (e) {
       debugPrint(e.toString());
     } catch (e) {
       debugPrint(e.toString());
     }
-    Navigator.of(context).push(
-      MaterialPageRoute(
-        builder: (context) => NewsMainPage(),
-      ),
-    );
   }
 }

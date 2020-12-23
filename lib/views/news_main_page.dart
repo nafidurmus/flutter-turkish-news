@@ -1,9 +1,11 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:turkish_news/views/sign_in.dart';
 import 'home_page.dart';
 
 class NewsMainPage extends StatefulWidget {
-  NewsMainPage({Key key}) : super(key: key);
+  final User user;
+  NewsMainPage({Key key, this.user}) : super(key: key);
 
   @override
   _NewsMainPageState createState() => _NewsMainPageState();
@@ -14,7 +16,14 @@ class _NewsMainPageState extends State<NewsMainPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        actions: [IconButton(icon: Icon(Icons.settings), onPressed: null)],
+        actions: [
+          IconButton(
+              icon: Icon(
+                Icons.settings,
+                color: Colors.white,
+              ),
+              onPressed: null)
+        ],
       ),
       body: Column(
         children: [
@@ -23,7 +32,7 @@ class _NewsMainPageState extends State<NewsMainPage> {
               gradient: LinearGradient(
                 begin: Alignment.topRight,
                 end: Alignment.bottomLeft,
-                colors: [Colors.blue[100], Colors.blue[400]],
+                colors: [Colors.grey[100], Colors.blue[400]],
               ),
             ),
             child: Center(
@@ -31,22 +40,17 @@ class _NewsMainPageState extends State<NewsMainPage> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 mainAxisSize: MainAxisSize.max,
                 children: <Widget>[
-                  /*CircleAvatar(
-                    backgroundImage: NetworkImage(
-                      imageUrl ?? '',
+                  Expanded(
+                    child: Center(
+                      child: Text(
+                        "merhaba " + email ?? widget.user.email,
+                        style: TextStyle(
+                            fontSize: 25,
+                            color: Colors.deepPurple,
+                            fontWeight: FontWeight.bold),
+                      ),
                     ),
-                    radius: 20,
-                    backgroundColor: Colors.transparent,
-                  ),*/
-                  SizedBox(height: 40),
-                  Text(
-                    email ?? 'akdlşfkalşk',
-                    style: TextStyle(
-                        fontSize: 25,
-                        color: Colors.deepPurple,
-                        fontWeight: FontWeight.bold),
                   ),
-                  SizedBox(height: 40),
                 ],
               ),
             ),
@@ -54,6 +58,7 @@ class _NewsMainPageState extends State<NewsMainPage> {
           RaisedButton(
             onPressed: () {
               signOutGoogle();
+
               Navigator.of(context).pushAndRemoveUntil(
                   MaterialPageRoute(builder: (context) {
                 return HomePage();
