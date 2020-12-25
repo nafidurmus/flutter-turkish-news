@@ -37,7 +37,7 @@ class _SettingsPageState extends State<SettingsPage> {
                       showLicensePage(
                         context: context,
                         // applicationIcon: Image.asset(name)
-                        //applicationName: "App Name"
+                        //applicationName: "haber"
                         // Other parameters
                       );
                     },
@@ -47,7 +47,13 @@ class _SettingsPageState extends State<SettingsPage> {
                       'Geliştirici',
                       style: style,
                     ),
-                    onTap: () {},
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => DeveleperPage()),
+                      );
+                    },
                   ),
                 ],
               ),
@@ -89,6 +95,50 @@ class _SettingsPageState extends State<SettingsPage> {
           ],
         ),
       ),
+    );
+  }
+}
+
+class DeveleperPage extends StatelessWidget {
+  const DeveleperPage({Key key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Geliştirici'),
+      ),
+      body: Center(
+        child: Column(
+          children: [
+            InkWell(child: socialAccount('facebook', 'facebook')),
+            InkWell(child: socialAccount('twitter', 'twitter')),
+            InkWell(child: socialAccount('github', 'github')),
+            InkWell(child: socialAccount('youtube', 'youtube')),
+            //InkWell(child: socialAccount('website', 'website')),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Row socialAccount(String logo, String name) {
+    return Row(
+      mainAxisSize: MainAxisSize.min,
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Image(image: AssetImage("assets/${logo}_logo.png"), height: 35.0),
+        Padding(
+          padding: const EdgeInsets.only(left: 10),
+          child: Text(
+            '$name',
+            style: TextStyle(
+              fontSize: 20,
+              color: Colors.black,
+            ),
+          ),
+        )
+      ],
     );
   }
 }
