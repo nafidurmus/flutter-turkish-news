@@ -1,13 +1,17 @@
 import 'package:flutter/material.dart';
 
-class SettingPage extends StatefulWidget {
-  SettingPage({Key key}) : super(key: key);
+import '../constants.dart';
+import 'home_page.dart';
+import 'sign_in.dart';
+
+class SettingsPage extends StatefulWidget {
+  SettingsPage({Key key}) : super(key: key);
 
   @override
-  _SettingPageState createState() => _SettingPageState();
+  _SettingsPageState createState() => _SettingsPageState();
 }
 
-class _SettingPageState extends State<SettingPage> {
+class _SettingsPageState extends State<SettingsPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -25,11 +29,24 @@ class _SettingPageState extends State<SettingPage> {
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
                   InkWell(
-                    child: Text('lisanslar'),
-                    onTap: () {},
+                    child: Text(
+                      'Lisanslar',
+                      style: style,
+                    ),
+                    onTap: () {
+                      showLicensePage(
+                        context: context,
+                        // applicationIcon: Image.asset(name)
+                        //applicationName: "App Name"
+                        // Other parameters
+                      );
+                    },
                   ),
                   InkWell(
-                    child: Text('geliştirici'),
+                    child: Text(
+                      'Geliştirici',
+                      style: style,
+                    ),
                     onTap: () {},
                   ),
                 ],
@@ -41,11 +58,31 @@ class _SettingPageState extends State<SettingPage> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
-                  Text('verion v01'),
-                  InkWell(
-                    child: Text('çıkış yap'),
-                    onTap: () {},
+                  Text(
+                    'FlutterNews v1',
+                    style: style,
                   ),
+                  RaisedButton(
+                    onPressed: () {
+                      signOutGoogle();
+
+                      Navigator.of(context).pushAndRemoveUntil(
+                          MaterialPageRoute(builder: (context) {
+                        return HomePage();
+                      }), ModalRoute.withName('/'));
+                    },
+                    color: Colors.deepPurple,
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Text(
+                        'Sign Out',
+                        style: TextStyle(fontSize: 25, color: Colors.white),
+                      ),
+                    ),
+                    elevation: 5,
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(40)),
+                  )
                 ],
               ),
             ),

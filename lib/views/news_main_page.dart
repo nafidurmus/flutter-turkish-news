@@ -179,7 +179,7 @@ class _NewsMainPageState extends State<NewsMainPage> {
               onPressed: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => SettingPage()),
+                  MaterialPageRoute(builder: (context) => SettingsPage()),
                 );
               },
             )
