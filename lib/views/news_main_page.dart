@@ -9,6 +9,8 @@ import 'package:shimmer/shimmer.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 import 'package:share/share.dart';
 
+import 'settings_page.dart';
+
 class NewsMainPage extends StatefulWidget {
   final String title;
   final User user;
@@ -170,11 +172,17 @@ class _NewsMainPageState extends State<NewsMainPage> {
           centerTitle: true,
           actions: [
             IconButton(
-                icon: Icon(
-                  Icons.settings,
-                  color: Colors.white,
-                ),
-                onPressed: null)
+              icon: Icon(
+                Icons.settings,
+                color: Colors.white,
+              ),
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => SettingPage()),
+                );
+              },
+            )
           ],
         ),
         body: body()
