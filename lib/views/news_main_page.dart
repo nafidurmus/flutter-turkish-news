@@ -6,6 +6,8 @@ import 'package:url_launcher/url_launcher.dart';
 import 'dart:convert' show utf8;
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:shimmer/shimmer.dart';
+import 'package:webview_flutter/webview_flutter.dart';
+import 'package:share/share.dart';
 
 class NewsMainPage extends StatefulWidget {
   final String title;
@@ -23,12 +25,14 @@ class _NewsMainPageState extends State<NewsMainPage> {
   static const String placeholderImg = 'assets/google_logo.png';
   GlobalKey<RefreshIndicatorState> _refreshKey;
 
+  //Web view için kullanılabilir.
+
   Future<void> openFeed(String url) async {
     if (await canLaunch(url)) {
       await launch(
         url,
         forceSafariVC: true,
-        forceWebView: false,
+        forceWebView: true,
       );
       return;
     }
@@ -71,33 +75,45 @@ class _NewsMainPageState extends State<NewsMainPage> {
       itemCount: _feed.items.length,
       itemBuilder: (BuildContext context, int index) {
         final item = _feed.items[index];
-        return GestureDetector(
-          onTap: () => openFeed(item.link),
-          child: Card(
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(3),
-            ),
-            child: Padding(
-              padding: const EdgeInsets.all(1),
-              child: ListTile(
-                leading: CachedNetworkImage(
-                  placeholder: (context, url) => Image.asset(placeholderImg),
-                  imageUrl: item.enclosure.url,
-                  alignment: Alignment.center,
-                  fit: BoxFit.fill,
+        return Column(
+          children: [
+            GestureDetector(
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => Deneme(item: item)),
+                );
+
+                //openFeed(item.link);
+              },
+              child: Card(
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(3),
                 ),
-                title: Text(
-                  item.title ?? "title coming",
-                  maxLines: 2,
-                  overflow: TextOverflow.ellipsis,
-                  style: const TextStyle(
-                      fontSize: 16,
-                      color: Colors.black,
-                      fontWeight: FontWeight.bold),
+                child: Padding(
+                  padding: const EdgeInsets.all(1),
+                  child: ListTile(
+                    leading: CachedNetworkImage(
+                      placeholder: (context, url) =>
+                          Image.asset(placeholderImg),
+                      imageUrl: item.enclosure.url,
+                      alignment: Alignment.center,
+                      fit: BoxFit.fill,
+                    ),
+                    title: Text(
+                      item.title ?? "title coming",
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
+                      style: const TextStyle(
+                          fontSize: 16,
+                          color: Colors.black,
+                          fontWeight: FontWeight.bold),
+                    ),
+                  ),
                 ),
               ),
             ),
-          ),
+          ],
         );
       },
     );
@@ -119,30 +135,24 @@ class _NewsMainPageState extends State<NewsMainPage> {
                   borderRadius: BorderRadius.circular(3),
                 ),
                 child: Padding(
-                    padding: const EdgeInsets.all(15),
-                    child: Column(children: <Widget>[
-                      Shimmer.fromColors(
-                        baseColor: Colors.grey[100],
-                        highlightColor: Colors.grey[400],
-                        child: Container(
-                          width: 350,
-                          height: 200,
-                          color: Colors.black,
-                        ),
+                  padding: const EdgeInsets.all(15),
+                  child: ListTile(
+                    leading: Shimmer.fromColors(
+                      baseColor: Colors.grey[100],
+                      highlightColor: Colors.grey[400],
+                      child: Container(
+                        color: Colors.black,
                       ),
-                      Padding(
-                        padding: const EdgeInsets.only(top: 10),
-                        child: Shimmer.fromColors(
-                          baseColor: Colors.grey[100],
-                          highlightColor: Colors.grey[400],
-                          child: Container(
-                            width: 350,
-                            height: 16,
-                            color: Colors.black,
+                    ),
+                    title: Shimmer.fromColors(
+                      baseColor: Colors.grey[100],
+                      highlightColor: Colors.grey[400],
+                      child: Container(
+                          //color: Colors.black,
                           ),
-                        ),
-                      ),
-                    ])),
+                    ),
+                  ),
+                ),
               );
             })
         : RefreshIndicator(
@@ -156,6 +166,8 @@ class _NewsMainPageState extends State<NewsMainPage> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
+          title: Text('Arama butonu gelecek'),
+          centerTitle: true,
           actions: [
             IconButton(
                 icon: Icon(
@@ -224,5 +236,34 @@ class _NewsMainPageState extends State<NewsMainPage> {
         ),
       ),*/
         );
+  }
+}
+
+class Deneme extends StatelessWidget {
+  final item;
+  const Deneme({Key key, this.item}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(item.title),
+        actions: [
+          IconButton(
+            icon: Icon(
+              Icons.share,
+              color: Colors.white,
+            ),
+            onPressed: () {
+              Share.share(item.link);
+            },
+          )
+        ],
+      ),
+      body: WebView(
+        initialUrl: item.link,
+        javascriptMode: JavascriptMode.unrestricted,
+      ),
+    );
   }
 }
