@@ -18,7 +18,7 @@ class NewsMainPage extends StatefulWidget {
 
 class _NewsMainPageState extends State<NewsMainPage> {
   RssFeed _feed;
-  String rssurl = 'https://www.hurriyet.com.tr/rss/anasayfa';
+  String rssurl = 'https://t24.com.tr/rss';
 
   static const String placeholderImg = 'assets/google_logo.png';
   GlobalKey<RefreshIndicatorState> _refreshKey;
@@ -66,7 +66,7 @@ class _NewsMainPageState extends State<NewsMainPage> {
 
   Widget list() {
     return ListView.builder(
-      padding: const EdgeInsets.only(left: 20, right: 20, top: 30),
+      padding: const EdgeInsets.only(left: 1, right: 1, top: 5),
       shrinkWrap: true,
       itemCount: _feed.items.length,
       itemBuilder: (BuildContext context, int index) {
@@ -74,56 +74,30 @@ class _NewsMainPageState extends State<NewsMainPage> {
         return GestureDetector(
           onTap: () => openFeed(item.link),
           child: Card(
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(3),
-              ),
-              child: Padding(
-                padding: const EdgeInsets.all(15),
-                child: Column(
-                  children: <Widget>[
-                    Stack(
-                      children: <Widget>[
-                        Shimmer.fromColors(
-                          baseColor: Colors.grey[100],
-                          highlightColor: Colors.grey[400],
-                          child: Container(
-                            width: 384,
-                            height: 180,
-                            color: Colors.black,
-                          ),
-                        ),
-                        CachedNetworkImage(
-                          placeholder: (context, url) =>
-                              Image.asset(placeholderImg),
-                          imageUrl: item.enclosure.url,
-                          alignment: Alignment.center,
-                          fit: BoxFit.fill,
-                        ),
-                      ],
-                    ),
-                    Text(
-                      item.title,
-                      maxLines: 2,
-                      overflow: TextOverflow.ellipsis,
-                      style: const TextStyle(
-                        fontSize: 12,
-                      ),
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: <Widget>[
-                        Text(
-                          item.pubDate.toString(),
-                          style: TextStyle(
-                              fontSize: 8, fontWeight: FontWeight.w100),
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                        ),
-                      ],
-                    )
-                  ],
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(3),
+            ),
+            child: Padding(
+              padding: const EdgeInsets.all(1),
+              child: ListTile(
+                leading: CachedNetworkImage(
+                  placeholder: (context, url) => Image.asset(placeholderImg),
+                  imageUrl: item.enclosure.url,
+                  alignment: Alignment.center,
+                  fit: BoxFit.fill,
                 ),
-              )),
+                title: Text(
+                  item.title ?? "title coming",
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
+                  style: const TextStyle(
+                      fontSize: 16,
+                      color: Colors.black,
+                      fontWeight: FontWeight.bold),
+                ),
+              ),
+            ),
+          ),
         );
       },
     );
