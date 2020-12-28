@@ -5,7 +5,6 @@ import 'package:http/http.dart' as http;
 import 'package:url_launcher/url_launcher.dart';
 import 'dart:convert' show utf8;
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:shimmer/shimmer.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 import 'package:share/share.dart';
 
@@ -127,36 +126,9 @@ class _NewsMainPageState extends State<NewsMainPage> {
 
   Widget body() {
     return isFeedEmpty()
-        ? ListView.builder(
-            shrinkWrap: true,
-            padding: const EdgeInsets.only(left: 20, right: 20, top: 30),
-            itemCount: 10,
-            itemBuilder: (BuildContext context, int index) {
-              return Card(
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(3),
-                ),
-                child: Padding(
-                  padding: const EdgeInsets.all(15),
-                  child: ListTile(
-                    leading: Shimmer.fromColors(
-                      baseColor: Colors.grey[100],
-                      highlightColor: Colors.grey[400],
-                      child: Container(
-                        color: Colors.black,
-                      ),
-                    ),
-                    title: Shimmer.fromColors(
-                      baseColor: Colors.grey[100],
-                      highlightColor: Colors.grey[400],
-                      child: Container(
-                          //color: Colors.black,
-                          ),
-                    ),
-                  ),
-                ),
-              );
-            })
+        ? Center(
+            child: CircleAvatar(),
+          )
         : RefreshIndicator(
             key: _refreshKey,
             child: list(),
@@ -164,12 +136,25 @@ class _NewsMainPageState extends State<NewsMainPage> {
           );
   }
 
+  TextEditingController searchController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: Text('Arama butonu gelecek'),
-          centerTitle: true,
+          //leading: Text(''),
+          title: TextField(
+            onChanged: (value) {},
+            controller: searchController,
+            decoration: InputDecoration(
+              labelStyle: TextStyle(color: Colors.black),
+              labelText: "Buradan haber arayabilirsin",
+              suffixIcon: Icon(
+                Icons.search,
+                color: Colors.white,
+              ),
+            ),
+          ),
           actions: [
             IconButton(
               icon: Icon(
