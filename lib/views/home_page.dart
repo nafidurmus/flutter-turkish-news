@@ -51,10 +51,7 @@ class _HomePageState extends State<HomePage> {
                 width: MediaQuery.of(context).size.width * 0.35,
                 child: RaisedButton.icon(
                   onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => RegisterPage()),
-                    );
+                    Navigator.pushNamed(context, '/register');
                   },
                   elevation: 2.0,
                   shape: new RoundedRectangleBorder(
@@ -74,10 +71,7 @@ class _HomePageState extends State<HomePage> {
                 width: MediaQuery.of(context).size.width * 0.35,
                 child: RaisedButton.icon(
                   onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => LoginPage()),
-                    );
+                    Navigator.pushNamed(context, '/login');
                   },
                   elevation: 2.0,
                   shape: new RoundedRectangleBorder(

@@ -72,10 +72,11 @@ class _SettingsPageState extends State<SettingsPage> {
                     onPressed: () {
                       signOutGoogle();
 
-                      Navigator.of(context).pushAndRemoveUntil(
-                          MaterialPageRoute(builder: (context) {
-                        return HomePage();
-                      }), ModalRoute.withName('/'));
+                      Navigator.pushNamedAndRemoveUntil(
+                        context,
+                        '/',
+                        ModalRoute.withName('/'),
+                      );
                     },
                     color: Colors.deepPurple,
                     child: Padding(
@@ -110,6 +111,7 @@ class DeveleperPage extends StatelessWidget {
       ),
       body: Center(
         child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
             InkWell(child: socialAccount('facebook', 'facebook')),
             InkWell(child: socialAccount('twitter', 'twitter')),

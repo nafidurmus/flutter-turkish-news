@@ -3,6 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:turkish_news/views/deneme.dart';
 
 import 'views/home_page.dart';
+import 'views/home_page.dart';
+import 'views/login_page.dart';
+import 'views/news_main_page.dart';
+import 'views/register_page.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -20,7 +24,14 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      home: HomePage(),
+      initialRoute: '/',
+      routes: {
+        '/': (context) => HomePage(),
+        '/login': (context) => LoginPage(),
+        '/register': (context) => RegisterPage(),
+        '/newsfeed': (context) => NewsMainPage(),
+      },
+      //home: HomePage(), // routes kullanılırsa bu satıra gerek yok
     );
   }
 }

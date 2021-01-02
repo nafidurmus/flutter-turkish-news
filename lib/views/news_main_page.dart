@@ -136,10 +136,13 @@ class _NewsMainPageState extends State<NewsMainPage> {
           );
   }
 
+  // --------------
+
   TextEditingController searchController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
+    print(_feed.items[1]);
     return Scaffold(
         appBar: AppBar(
           //leading: Text(''),
@@ -147,11 +150,13 @@ class _NewsMainPageState extends State<NewsMainPage> {
             onChanged: (value) {},
             controller: searchController,
             decoration: InputDecoration(
-              labelStyle: TextStyle(color: Colors.black),
-              labelText: "Buradan haber arayabilirsin",
-              suffixIcon: Icon(
-                Icons.search,
-                color: Colors.white,
+              hintStyle: TextStyle(color: Colors.black),
+              hintText: "Buradan haber arayabilirsin",
+              suffixIcon: IconButton(
+                icon: Icon(Icons.search, color: Colors.white),
+                onPressed: () {
+                  print(searchController.text);
+                },
               ),
             ),
           ),

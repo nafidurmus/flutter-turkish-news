@@ -123,13 +123,8 @@ class _LoginPageState extends State<LoginPage> {
                       onPressed: () {
                         signInWithGoogle().then((result) {
                           if (result != null) {
-                            Navigator.of(context).push(
-                              MaterialPageRoute(
-                                builder: (context) {
-                                  return NewsMainPage();
-                                },
-                              ),
-                            );
+                            Navigator.pushReplacementNamed(
+                                context, '/newsfeed');
                           }
                         });
                       },
@@ -179,13 +174,7 @@ class _LoginPageState extends State<LoginPage> {
       ))
           .user;
       print(user);
-      Navigator.of(context).push(
-        MaterialPageRoute(
-          builder: (context) => NewsMainPage(
-            user: user,
-          ),
-        ),
-      );
+      Navigator.pushReplacementNamed(context, '/newsfeed');
     } on FirebaseAuthException catch (e) {
       debugPrint(e.toString());
     } catch (e) {

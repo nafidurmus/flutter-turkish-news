@@ -10,9 +10,6 @@ class RegisterPage extends StatefulWidget {
   _RegisterStatePage createState() => _RegisterStatePage();
 }
 
-bool _success = true;
-String _message;
-
 Pattern _pattern =
     r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$';
 RegExp regex = RegExp(_pattern);
@@ -38,30 +35,14 @@ class _RegisterStatePage extends State<RegisterPage> {
       ))
           .user;
       if (user != null) {
-        setState(() {
-          _success = true;
-          _message = "Kayıt başarılı ${user.email}";
-        });
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => NewsMainPage(
-              user: user,
-            ),
-          ),
-        );
+        setState(() {});
+        Navigator.pushReplacementNamed(context, '/newsfeed');
       } else {
-        setState(() {
-          _success = false;
-          _message = "Kayıt başarısız.";
-        });
+        setState(() {});
       }
     } catch (e) {
       debugPrint(e.toString());
-      setState(() {
-        _success = false;
-        _message = "Kayıt başarısız.\n\n$e";
-      });
+      setState(() {});
     }
   }
 
